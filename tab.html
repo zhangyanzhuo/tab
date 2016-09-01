@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+		
+			div{
+				width: 200px;
+				height: 200px;
+				border: 1px solid red;
+				margin-top: 5px;
+				display: none;
+			}
+			.show{
+				display: block;
+			}
+			.active{
+				background: greenyellow;
+			}
+		</style>
+		<script>
+			window.onload = function() {
+				//创建类
+				function Drag() {
+					//找到元素
+					this.btns = document.querySelectorAll('button');
+					this.divs = document.querySelectorAll('div');
+				}
+				//添加点击方法
+				Drag.prototype.click = function() {
+					var _this = this;
+					//给每个btn添加点击事件
+					for(var i = 0; i < this.btns.length; i++) {
+						this.btns[i].index = i;
+						this.btns[i].onclick = function() {
+							//调用tab方法,传入当前this（按钮）作为实参
+							_this.tab(this);
+						}
+					}
+				}
+				//添加tab方法,接收形参that
+				Drag.prototype.tab = function(that) {
+					//清空所有默认样式
+					for(var i = 0; i < this.btns.length; i++) {
+						this.btns[i].className = '';
+						this.divs[i].className = '';
+					}
+					//给btn和div添加class名
+					that.className = 'active';
+					this.divs[that.index].className = 'show';
+				}
+				//创建对象
+				var o = new Drag();
+				//调用click方法
+				o.click();
+			}
+		</script>
+	</head>
+	<body>
+		<button class="active">按钮一</button>
+		<button>按钮二</button>
+		<button>按钮三</button>
+		<div class="show">111111</div>
+		<div>222222</div>
+		<div>333333</div>
+	</body>
+</html>
